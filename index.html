@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<style>
+		.nojelda {
+			background:url('jelda.png'); 
+			background-size: cover; 
+			background-attachment: fixed;
+		}
+		.center-spacing { 
+			width: 30%; 
+			height: auto; 
+			display: block; 
+		}
+		.wrap {
+			display: flex;    
+			justify-content: center;  
+			gap: 20px; 
+			margin: 0 auto;
+		}
+		.btn {
+			margin-top: 30px;
+			padding: 10px 20px;
+			font-size: 18px;
+			cursor: pointer;
+			border-radius: 2px;
+			border: none;
+			background: black;
+			color: white;
+			position: fixed;
+			bottom: 40px;     
+			left: 50%;        
+			transform: translateX(-50%); 
+		}
+	</style>
+	<title>랜덤 이미지</title>
+</head>
+<body>
+
+	<header class="wrap">
+		<h1 style="margin-top: 70px; margin-bottom: 70px;"> 요리를 하자, 요리를 하자 </h1>
+	</header>
+
+	<div class="wrap">
+		<img id="randomImage" class="center-spacing" src="jelda.png" style="width: 25%; height: auto;">
+	</div>
+
+	<audio id="player"></audio>
+
+	<div class="wrap">
+		<button id="actionBtn" class="btn" onclick="handleButtonClick()">요리하기</button>
+	</div>
+
+	<script>
+		const images = [
+			"food1-01.png","food2-01.png","food3-01.png","food4-01.png",
+			"food5-01.png","food6-01.png","food7-01.png","food8-01.png",
+			"food9-01.png","food10-01.png","food11-01.png","food12-01.png","food13-01.png","food14-01.png","food15-01.png","food16-01.png"
+		];
+
+		const defaultImage = "jelda.png";
+		const musicFile = "Jelda_cooking.flac"; 
+
+		let isFirstClick = true;
+
+		function handleButtonClick() {
+			const img = document.getElementById("randomImage");
+			const btn = document.getElementById("actionBtn");
+			const audio = document.getElementById("player");
+
+			if (isFirstClick) {
+				audio.src = musicFile;
+				audio.play();
+
+				audio.onended = function() {
+					const randomImage = images[Math.floor(Math.random() * images.length)];
+					img.src = randomImage;
+					btn.textContent = "다시 요리하기";
+					isFirstClick = false;
+				};
+
+			} else {
+				img.src = defaultImage;
+				btn.textContent = "랜덤 결과 보기";
+				isFirstClick = true;
+			}
+		}
+	</script>
+
+</body>
+</html>
